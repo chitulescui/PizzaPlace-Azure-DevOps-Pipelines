@@ -6,7 +6,7 @@ variables:
   buildConfiguration: 'Release'
   versionNumber: $(BuildMajor).$(BuildMinor).$(BuildPatch)
   NUGET_ENABLE_LEGACY_CSPROJ_PACK: true
-  storageAKey: wO8b9aMihQfZpfDa7VD1Y5+METx0YOj8/SaPVjrsK3718PhyyirLZzaGGW45km+hkbFuzPQ6A2NM+ASthoS6dw==
+  storageAKey: --placeholder--
   storageAName: storageaccountdesktopapp
   storageContainerName: blobcontainerswk
 
@@ -49,7 +49,7 @@ steps:
     azureSubscription: 'WebApp'
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az login --service-principal -u 436987b7-bca6-4b8d-bf5c-eb7165dec401 -p nmJ8Q~jjmdqxJ3Ti3vavR2UmSpuG6ImQaI0vPbN8 --tenant 51586f62-10d1-436c-a716-374b516d2596'
+    inlineScript: 'az login --service-principal -u --placeholder-- -p --placeholder-- --tenant --placeholder--'
 
 - pwsh: dir $(System.ArtifactsDirectory)/pack
 
