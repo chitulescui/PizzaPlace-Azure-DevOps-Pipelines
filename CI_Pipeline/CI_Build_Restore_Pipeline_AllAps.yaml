@@ -1,0 +1,88 @@
+
+
+resources:
+  repositories:
+    - repository: WebApp
+      type: git
+      name: PizzaPlaceSWK/WebApp
+      ref: develop
+    - repository: CatalogMS
+      type: git
+      name: PizzaPlaceSWK/CatalogMS
+      ref: develop
+    - repository: BasketMS
+      type: git
+      name: PizzaPlaceSWK/BasketMS
+      ref: develop
+    - repository: DesktopApp
+      type: git
+      name: PizzaPlaceSWK/DesktopApp
+      ref: develop
+    - repository: IdentityMS
+      type: git
+      name: PizzaPlaceSWK/IdentityMS
+      ref: develop
+
+
+
+parameters:
+- name: configs
+  type: string
+  values: 
+    - WebApp
+    - CatalogMs
+    - DesktopApp
+    - IdentityMS
+    - BasketMS
+
+
+pool:
+  name: "DevOps-Agents-VM"
+trigger: none
+
+jobs:
+- ${{ if eq(parameters.configs, 'WebApp') }}:
+  - job: Restore_and_Build_WebApp
+    steps:
+    - checkout: WebApp
+      path: main
+    - template: templates/restoreAndBuild.yml
+      parameters:
+        project: '**/WebApp/*.csproj'
+        arguments: '-c Release'
+- ${{ if eq(parameters.configs, 'CatalogMs') }}:
+  - job: Restore_and_Build_CatalogMs
+    steps:
+    - checkout: CatalogMS
+      path: develop
+    - template: templates/restoreAndBuild.yml
+      parameters:
+        project: '**\CatalogService\CatalogService\*.csproj'
+        arguments: '-c Release'
+- ${{ if eq(parameters.configs, 'IdentityMS') }}:
+  - job: Restore_and_Build_IdentityMS
+    steps:
+    - checkout: IdentityMS
+      path: develop
+    - template: templates/restoreAndBuild.yml
+      parameters:
+        project: '**\IdentityMS-Solution\IdentityMS-Solution\*.csproj'
+        arguments: '-c Release'
+- ${{ if eq(parameters.configs, 'DesktopApp') }}:
+  - job: Restore_and_Build_DesktopApp
+    steps:
+    - checkout: DesktopApp
+      path: develop
+    - template: templates/restoreAndBuild.yml
+      parameters:
+        project: '**\APP\PizzaPlace\*.csproj'
+        arguments: '-c Release'
+- ${{ if eq(parameters.configs, 'BasketMS') }}:
+  - job: Restore_and_Build_BasketMS
+    steps:
+    - checkout: BasketMS
+      path: develop
+    - template: templates/restoreAndBuild.yml
+      parameters:
+        project: '**\BasketMS-Solution\BasketService\*.csproj'
+        arguments: '-c Release'

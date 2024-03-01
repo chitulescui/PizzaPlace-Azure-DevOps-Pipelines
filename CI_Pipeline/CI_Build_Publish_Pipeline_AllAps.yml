@@ -1,0 +1,165 @@
+resources:
+  repositories:
+    - repository: WebApp
+      type: git
+      name: PizzaPlaceSWK/WebApp
+      ref: develop
+    - repository: CatalogMS
+      type: git
+      name: PizzaPlaceSWK/CatalogMS
+      ref: develop
+    - repository: BasketMS
+      type: git
+      name: PizzaPlaceSWK/BasketMS
+      ref: develop
+    - repository: DesktopApp
+      type: git
+      name: PizzaPlaceSWK/DesktopApp
+      ref: develop
+    - repository: IdentityMS
+      type: git
+      name: PizzaPlaceSWK/IdentityMS
+      ref: develop
+
+
+
+parameters:
+- name: configs
+  type: string
+  values: 
+    - WebApp
+    - CatalogMS
+    - DesktopApp
+    - IdentityMS
+    - BasketMS
+
+
+pool:
+  name: "DevOps-Agents-VM"
+trigger: none
+
+
+jobs:
+- ${{ if eq(parameters.configs, 'WebApp') }}:
+  - job: Build_And_Publish_WebApp
+    steps:
+    - checkout: WebApp
+      path: develop
+    - task: PowerShell@2
+      displayName: 'Show directory contents'
+      inputs:
+        targetType: 'inline'
+        script: 'Get-ChildItem -Depth 2'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o "$(Build.ArtifactStagingDirectory)/SWK_WebApp_$(Build.BuildId)"'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/SWK_WebApp_$(Build.BuildId)'
+        artifact: 'SWK_WebApp_Artifact'
+        publishLocation: 'pipeline'
+- ${{ if eq(parameters.configs, 'CatalogMS') }}:
+  - job: Build_And_Publish_CatalogMS
+    steps:
+    - checkout: CatalogMS
+      path: develop
+    - task: PowerShell@2
+      displayName: 'Show directory contents'
+      inputs:
+        targetType: 'inline'
+        script: 'Get-ChildItem -Depth 2'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o "$(Build.ArtifactStagingDirectory)/SWK_CatalogMS_$(Build.BuildId)"'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/SWK_CatalogMS_$(Build.BuildId)'
+        artifact: 'SWK_CatalogMS_Artifact'
+        publishLocation: 'pipeline'
+
+- ${{ if eq(parameters.configs, 'IdentityMS') }}:
+  - job: Build_And_Publish_IdentityMS
+    steps:
+    - checkout: IdentityMS
+      path: develop
+    - task: PowerShell@2
+      displayName: 'Show directory contents'
+      inputs:
+        targetType: 'inline'
+        script: 'Get-ChildItem -Depth 2'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o "$(Build.ArtifactStagingDirectory)/SWK_IdentityMS_$(Build.BuildId)"'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/SWK_IdentityMS_$(Build.BuildId)'
+        artifact: 'SWK_IdentityMS_Artifact'
+        publishLocation: 'pipeline'
+
+- ${{ if eq(parameters.configs, 'DesktopApp') }}:
+  - job: Build_And_Publish_DesktopApp
+    steps:
+    - checkout: DesktopApp
+      path: develop
+    - task: PowerShell@2
+      displayName: 'Show directory contents'
+      inputs:
+        targetType: 'inline'
+        script: 'Get-ChildItem -Depth 2'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o "$(Build.ArtifactStagingDirectory)/SWK_DesktopApp_$(Build.BuildId)"'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/SWK_DesktopApp_$(Build.BuildId)'
+        artifact: 'SWK_DesktopApp_Artifact'
+        publishLocation: 'pipeline'
+
+- ${{ if eq(parameters.configs, 'BasketMS') }}:
+  - job: Build_And_Publish_BasketMS
+    steps:
+    - checkout: BasketMS
+      path: develop
+    - task: PowerShell@2
+      displayName: 'Show directory contents'
+      inputs:
+        targetType: 'inline'
+        script: 'Get-ChildItem -Depth 2'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-o "$(Build.ArtifactStagingDirectory)/SWK_BasketMS_$(Build.BuildId)"'
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/SWK_BasketMS_$(Build.BuildId)'
+        artifact: 'SWK_BasketMS_Artifact'
+        publishLocation: 'pipeline'

@@ -1,0 +1,62 @@
+trigger:
+- none
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  versionNumber: $(BuildMajor).$(BuildMinor).$(BuildPatch)
+  NUGET_ENABLE_LEGACY_CSPROJ_PACK: true
+
+resources:
+  repositories:
+  - repository: DesktopApp
+    type: git
+    name: PizzaPlaceSWK/DesktopApp
+    ref: develop
+
+pool:
+  name: "DevOps-Agents-VM"
+
+steps:
+- checkout: DesktopApp
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'dotnet tool update -g vpk'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**\APP\PizzaPlace\*.csproj'
+    arguments: '-c Release -o $(Build.ArtifactStagingDirectory)\Build'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish build artifact'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**\app\PizzaPlace\*.csproj'
+    arguments: '-c Release --self-contained -r win-x64 -o $(build.artifactStagingDirectory)\publish'
+    zipAfterPublish: false
+    modifyOutputPath: false
+
+- task: PowerShell@2
+  displayName: 'Powershell Rename buildNumber'
+  inputs:
+    targetType: 'inline'
+    script: ' [string] $buildName = "$(versionNumber)"'
+      
+           
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'vpk pack -u SWK.PizzaPlace -v "$(versionNumber)" -p $(Build.ArtifactStagingDirectory)\Publish -e PizzaPlace.exe -o $(Build.ArtifactStagingDirectory)\Pack'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(build.artifactStagingDirectory)\Pack'
+    artifact: 'velopack'
+    publishLocation: 'pipeline'
+
+

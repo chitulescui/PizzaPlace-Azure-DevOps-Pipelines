@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+
+pool:
+  name: DevOps-Agents-VM
+
+steps:
+- task: DownloadPipelineArtifact@2
+  displayName: 'Download Pipeline Artifact'
+  inputs:
+    buildType: specific
+    project: '375d73b2-f6a9-4fb4-b4ee-02ddf80e126e'
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    definition: 285
+    artifactName: 'SWK_WebApp_Artifact'
+    itemPattern: '**.zip'
+    downloadPath: '$(System.ArtifactsDirectory)'
+    cleanDestinationFolder: true
+
+
+- task: AzureWebApp@1
+  displayName: 'Azure Web App Deploy: SWK-pizzaplace-webapp'
+  inputs:
+    azureSubscription: WebApp
+    appType: webAppLinux
+    appName: 'SWK-pizzaplace-webapp'
+    package: '$(System.DefaultWorkingDirectory)/_CI_Pipeline_WebApp/SWK_WebApp_Artifact/WebApp.zip'

@@ -1,0 +1,61 @@
+trigger:
+- none
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  versionNumber: $(BuildMajor).$(BuildMinor).$(BuildPatch)
+  NUGET_ENABLE_LEGACY_CSPROJ_PACK: true
+  storageAKey: wO8b9aMihQfZpfDa7VD1Y5+METx0YOj8/SaPVjrsK3718PhyyirLZzaGGW45km+hkbFuzPQ6A2NM+ASthoS6dw==
+  storageAName: storageaccountdesktopapp
+  storageContainerName: blobcontainerswk
+
+resources:
+  repositories:
+  - repository: DesktopApp
+    type: git
+    name: PizzaPlaceSWK/DesktopApp
+    ref: develop
+
+#da
+pool:
+  name: "DevOps-Agents-VM"
+
+steps:
+- checkout: DesktopApp
+
+- task: DownloadBuildArtifacts@1
+  inputs:
+    buildType: 'specific'
+    project: '375d73b2-f6a9-4fb4-b4ee-02ddf80e126e'
+    pipeline: '293'
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    downloadPath: '$(build.artifactStagingDirectory)\Pack\velopack'
+    cleanDestinationFolder: true
+
+- task: AzureCLI@2
+  displayName: Azure CLI
+  inputs:
+    azureSubscription: 'WebApp'
+    scriptType: ps
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --version
+      az account show
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'WebApp'
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az login --service-principal -u 436987b7-bca6-4b8d-bf5c-eb7165dec401 -p nmJ8Q~jjmdqxJ3Ti3vavR2UmSpuG6ImQaI0vPbN8 --tenant 51586f62-10d1-436c-a716-374b516d2596'
+
+- pwsh: dir $(System.ArtifactsDirectory)/pack
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'WebApp'
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az storage blob upload-batch -d $(storageContainerName) --account-name $(storageAName) --account-key $(storageAKey) -s $(build.artifactStagingDirectory)\Pack\velopack --overwrite'  

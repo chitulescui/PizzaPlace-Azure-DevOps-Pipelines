@@ -1,0 +1,19 @@
+
+trigger: none
+pool:
+  name: "DevOps-Agents-VM"
+
+stages:
+
+- stage: Build_WebApp
+  jobs:
+  - job: Build_WebApp
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
