@@ -1,4 +1,4 @@
-name: .NET
+name: Push docker image to hub 
 
 on:
   push:
