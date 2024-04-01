@@ -19,13 +19,20 @@ jobs:
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
-          username: vchitulescu2@gmail.com
+          username: chitulescui
           password: ${{ secrets.SECRET_DOCKER }}
     - name: Build 
       working-directory: WebApp/
       run: docker build . --file Dockerfile --tag webapp:latest
     - name: Tag
       run: docker tag webapp:latest githubreposwk/webapp:latest
+    - name: Logout
+      run: docker logout
+    - name: Login
+      uses: docker/login-action@v3
+      with:
+          username: chitulescui
+          password: ${{ secrets.SECRET_DOCKER }} 
     - name: Push
       run: docker push githubreposwk/webapp:latest
     
