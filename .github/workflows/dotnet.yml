@@ -30,7 +30,7 @@ jobs:
       - name: Publish
         run: dotnet publish ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --configuration Release --output ./publish
       - name: Add Source
-        run: dotnet nuget push ./DesktopApp/APP/PizzaPlace/bin/Release/PizzaPlace.1.0.0.nupkg  --api-key ${{secrets.pipelineconnect}} --source "github"
+        run: dotnet nuget push ./DesktopApp/APP/PizzaPlace/bin/Release/PizzaPlace.1.0.0.nupkg  --api-key ${{secrets.pipelineconnect}} --source github
 
 
 
