@@ -23,7 +23,7 @@ jobs:
       run: kubectl get deployment
     - name: Change directory
       run: cd ~/Desktop/kubernetes
-    - name: Add the deployment
-      run: kubectl apply -f webapp-deployment.yaml
+    # - name: Add the deployment
+    #   run: kubectl apply -f webapp-deployment.yaml
     - name: Scale-up
       run: kubectl scale deployment webapp-deployment –replicas=4
