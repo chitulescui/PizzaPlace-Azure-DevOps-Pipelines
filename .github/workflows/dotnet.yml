@@ -30,6 +30,8 @@ jobs:
       - name: Publish
         run: dotnet publish ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --configuration Release --output ./publish
       - name: Add Source
+        run: dotnet nuget add source --username chitulescui --password ${{ secrets.pipelineconnect }} --store-password-in-clear-text --name github2 "https://nuget.pkg.github.com/NAMESPACE/index.json" 
+      - name: push  
         run: dotnet nuget push ./DesktopApp/APP/PizzaPlace/bin/Release/PizzaPlace.1.0.0.nupkg  --api-key ${{secrets.pipelineconnect}} --source github
 
 
