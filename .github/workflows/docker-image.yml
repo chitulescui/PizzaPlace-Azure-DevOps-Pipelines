@@ -18,6 +18,6 @@ jobs:
     - name: Start minikube
       run: minikube start
     - name: Add the deployment
-      run: kubetcl apply -f webapp-deployment.yaml
+      run: kubectl apply -f webapp-deployment.yaml
     - name: Scale-up
       run: kubectl scale deployment webapp-deployment –replicas=4
