@@ -21,8 +21,12 @@ jobs:
       #   with: 
       #     dotnet-version: 8.0.x
           
-      - name: Install dependencies
+      - name: Restore
         run: dotnet restore ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+      - name: Build
+        run: dotnet build ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+      - name: Pack
+        run: dotnet pack ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
 
 
 
