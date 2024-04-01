@@ -1,0 +1,58 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
+jobs:
+  build:
+
+    runs-on: ["self-hosted","Linux","X64"]
+   
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+    # Repository name with owner. For example, actions/checkout
+    # Default: ${{ github.repository }}
+          repository: ${{ github.repository }}
+      # - uses: action/checkout@v3
+      # - name: Setup .Net Core
+      #   uses: actions/setup-dotnet@v3
+      #   with: 
+      #     dotnet-version: 8.0.x
+          
+      - name: Restore
+        run: dotnet restore ./WebApp/WebApp/WebApp.csproj
+      - name: Build
+        run: dotnet build ./WebApp/WebApp/WebApp.csproj
+      - name: Pack
+        run: dotnet pack ./WebApp/WebApp/WebApp.csproj --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+      - name: Publish
+        run: dotnet publish ./WebApp/WebApp/WebApp.csproj --configuration Release --output ./publish
+      - name: push  
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg  --api-key ${{secrets.SECRET_DISCRET}} -s 'https://nuget.pkg.github.com/chitulescui/index.json'
+
+
+
+
+    
+    # - name: setup-msbuild
+    #   uses: microsoft/setup-msbuild@v2
+    # - name: .Net Build
+    #   uses: EasyDesk/action-dotnet-build@v1.0.0
+    #   with:
+    #     build-args: PizzaPlace.csproj
+    # - name: Test
+    #   working-directory: chitulescui\PizzaPlace-Azure-DevOps-Pipelines\DesktopApp\APP\PizzaPlace
+    #   run: dotnet test --no-build --verbosity normal
+      
+      
+          

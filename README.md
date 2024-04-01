@@ -32,5 +32,22 @@ TODO: Create your CI pipelines to restore/build your .csproj file or publish you
    Create your pipeline based on CI_Build_Publish_Pipeline_AllAps.yml file. The YAML is designed to let you choose the application from a dropdown menu and it executes the commands only on that repository. 
 # Download artifacts and deploy to Azure Portal 
 TODO: Create your CD pipelines to  publish your WebApp or DesktopApp directly to Azure Portal (User has to change the subscription details and working folders specified in YML file)
-1. Download & Push to Azure Portal
-Create your pipeline based on CD_Pipeline_WebApp.yml file. Change your Azure Subscription and paths accordingly. 
+1. Download & Push to Azure Portal - **WebApp**
+Create your pipeline based on CD_Pipeline_WebApp.yml file. Change your Azure Subscription and paths accordingly.
+2. Download & Push to Azure Portal - **DesktopApp**
+Desktop app was packed before using velopack feature.
+Create your pipeline based on CD_Pipeline_DesktopApp.yml file. Change your Azure Subscription and paths accordingly
+# Run Docker containers for each application
+Docker image file was configured for each project. 
+Ports exposed: 
+1. BasketMS : 8080
+2. CatalogMS : 8081
+3. DesktopApp : 8082
+4. IdentityMS : 8083
+5. WebApp : 8084
+
+
+Run docker containers with the following comand:
+```
+docker compose up --build
+```
