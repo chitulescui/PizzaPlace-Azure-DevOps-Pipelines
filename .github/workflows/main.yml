@@ -2,9 +2,9 @@ name: Push docker image to hub
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "second" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "second" ]
 env:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
