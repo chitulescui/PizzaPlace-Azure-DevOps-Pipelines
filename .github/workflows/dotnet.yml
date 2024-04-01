@@ -15,9 +15,14 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Restore dependencies
+    - uses: actions/checkout@v2 chitulescui/PizzaPlace-Azure-DevOps-Pipelines@main
+      with:
+        repository: chitulescui/PizzaPlace-Azure-DevOps-Pipelines
+      name: restore
       run: dotnet restore
-    - name: Build
+    - uses: raquelhortab/hello_world_github_actions/.github/actions/automatic-tests@master
+      name: Build
       run: dotnet build --no-restore
-    - name: Test
+    - uses: raquelhortab/hello_world_github_actions/.github/actions/automatic-tests@master
+      name: Test
       run: dotnet test --no-build --verbosity normal
