@@ -31,7 +31,7 @@ jobs:
       - name: Publish
         run: dotnet publish ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --configuration Release --output ./publish
       - name: push  
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg  --api-key ${{secrets.pipelineconnect}} -s 'https://nuget.pkg.github.com/chitulescui/index.json'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg  --api-key ${{secrets.SECRET_DISCRET}} -s 'https://nuget.pkg.github.com/chitulescui/index.json'
 
 
 
