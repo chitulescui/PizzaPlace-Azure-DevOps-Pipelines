@@ -27,6 +27,8 @@ jobs:
         run: dotnet build ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
       - name: Pack
         run: dotnet pack ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+      - name: Publish
+        run: dotnet publish ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --configuration Release --output ./publish
 
 
 
