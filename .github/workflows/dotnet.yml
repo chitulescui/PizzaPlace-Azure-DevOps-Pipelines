@@ -15,14 +15,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        repository: chitulescui/PizzaPlace-Azure-DevOps-Pipelines
-      name: restore
+    - name: restore
+      working-directory: chitulescui/PizzaPlace-Azure-DevOps-Pipelines/CatalogMS
       run: dotnet restore
-    - uses: raquelhortab/hello_world_github_actions/.github/actions/automatic-tests@master
-      name: Build
+    - name: Build
+      working-directory: chitulescui/PizzaPlace-Azure-DevOps-Pipelines/CatalogMS
       run: dotnet build --no-restore
-    - uses: raquelhortab/hello_world_github_actions/.github/actions/automatic-tests@master
-      name: Test
+    - name: Test
+      working-directory: chitulescui/PizzaPlace-Azure-DevOps-Pipelines/CatalogMS
       run: dotnet test --no-build --verbosity normal
