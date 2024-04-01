@@ -1,0 +1,32 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
+jobs:
+  build:
+
+    runs-on: ["self-hosted","Linux","X64"]
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v4.1.4
+      with: 
+          name: WebApp
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+          username: chitulescui
+          password: ${{ secrets.SECRET_DOCKER }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+          push: true
+          tags: akoskm/my-image:latest
+
+    
+    
