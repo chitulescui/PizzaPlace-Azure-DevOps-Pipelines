@@ -30,13 +30,13 @@ jobs:
       #     dotnet-version: 8.0.x
           
       - name: Restore
-        run: dotnet restore ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet restore ./WebApp/WebApp/WebApp.csproj
       - name: Build
-        run: dotnet build ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet build ./WebApp/WebApp/WebApp.csproj
       - name: Pack
-        run: dotnet pack ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack ./WebApp/WebApp/WebApp.csproj --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
       - name: Publish
-        run: dotnet publish ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --configuration Release --output ./publish
+        run: dotnet publish ./WebApp/WebApp/WebApp.csproj --configuration Release --output ./publish
       - name: push  
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg  --api-key ${{secrets.SECRET_DISCRET}} -s 'https://nuget.pkg.github.com/chitulescui/index.json'
 
