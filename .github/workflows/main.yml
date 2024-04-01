@@ -22,6 +22,7 @@ jobs:
           username: chitulescui
           password: ${{ secrets.SECRET_DOCKER }}
     - name: Build and push Docker images
+      working-directory: WebApp/
       run: docker build . --file Dockerfile --tag webapp:latest
     
    
