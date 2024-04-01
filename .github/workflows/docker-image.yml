@@ -26,4 +26,4 @@ jobs:
     # - name: Add the deployment
     #   run: kubectl apply -f webapp-deployment.yaml
     - name: Scale-up
-      run: kubectl scale deployment webapp-deployment –replicas=4
+      run: kubectl scale --replicas=3 -f webapp-deployment.yaml
