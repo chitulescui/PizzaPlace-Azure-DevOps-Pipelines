@@ -8,7 +8,10 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+env: 
+  PROJECT_PATH: './DesktopApp/APP/PizzaPlace/PizzaPlace.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  NUGET_SOURCE_URL: 'https://nuget.pkg.github.com/chitulescui/index.json'
 jobs:
   build:
 
@@ -22,15 +25,15 @@ jobs:
       #     dotnet-version: 8.0.x
           
       - name: Restore
-        run: dotnet restore ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet restore ${{ PROJECT_PATH }}
       - name: Build
-        run: dotnet build ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet build ${{ PROJECT_PATH }}
       - name: Pack
-        run: dotnet pack ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet pack ${{ PROJECT_PATH }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
       - name: Publish
-        run: dotnet publish ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj --configuration Release --output ./publish
+        run: dotnet publish ${{ PROJECT_PATH }} --configuration Release --output ./publish
       - name: push  
-        run: dotnet nuget push './DesktopApp/APP/PizzaPlace/bin/Release/PizzaPlace.1.0.0.nupkg'  --api-key ${{secrets.pipelineconnect}} --source 'https://nuget.pkg.github.com/chitulescui/index.json'
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg  --api-key ${{secrets.pipelineconnect}} -s ${{ NUGET_SOURCE_URL }}
 
 
 
