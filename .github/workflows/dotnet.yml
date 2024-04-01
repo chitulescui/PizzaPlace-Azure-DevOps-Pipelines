@@ -18,6 +18,11 @@ jobs:
    
 
     steps:
+      - uses: actions/checkout@v4
+        with:
+    # Repository name with owner. For example, actions/checkout
+    # Default: ${{ github.repository }}
+          repository: ${{ github.repository }}
       # - uses: action/checkout@v3
       # - name: Setup .Net Core
       #   uses: actions/setup-dotnet@v3
@@ -25,7 +30,7 @@ jobs:
       #     dotnet-version: 8.0.x
           
       - name: Restore
-        run: dotnet restore /PizzaPlace-Azure-DevOps-Pipelines/DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet restore ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
       - name: Build
         run: dotnet build ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
       - name: Pack
