@@ -15,15 +15,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    # - name: restore
-    #   working-directory: chitulescui\PizzaPlace-Azure-DevOps-Pipelines\DesktopApp\APP\PizzaPlace
-    #   run: dotnet restore
     - name: .Net Build
       uses: EasyDesk/action-dotnet-build@v1.0.0
       with:
         build-args: PizzaPlace.csproj
-        # build-configuration: Release
-        # path: /DesktopApp/APP/PizzaPlace
     - name: Test
       working-directory: chitulescui\PizzaPlace-Azure-DevOps-Pipelines\DesktopApp\APP\PizzaPlace
       run: dotnet test --no-build --verbosity normal
