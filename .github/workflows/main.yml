@@ -20,14 +20,10 @@ jobs:
       run: docker login -u chitulescui -p ${{ secrets.SECRET_DOCKER }}
     - name: Build 
       working-directory: WebApp/
-      run: docker build . --file Dockerfile --tag webapp:latest
+      run: docker build . --file Dockerfile --tag webapp
     - name: Tag
-      run: docker tag webapp:latest githubreposwk/webapp:latest
-    - name: Logout
-      run: docker logout
-    - name: Login to Docker Hub
-      run: docker login -u chitulescui -p ${{ secrets.SECRET_DOCKER }}
+      run: docker tag webapp chitulescui/webapp:webapp
     - name: Push
-      run: docker push githubreposwk/webapp:latest
+      run: docker push chitulescui/webapp:webapp
     
    
