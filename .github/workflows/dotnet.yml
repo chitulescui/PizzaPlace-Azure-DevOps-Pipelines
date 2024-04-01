@@ -13,7 +13,8 @@ env:
 jobs:
   build:
 
-    runs-on: [self-hosted, linux, x64, gpu]
+    runs-on: ["self-hosted","Linux","X64"]
+   
 
     steps:
       # - uses: action/checkout@v3
