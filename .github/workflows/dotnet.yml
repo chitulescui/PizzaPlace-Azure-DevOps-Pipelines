@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env: 
-  PROJECT_PATH: '/DesktopApp/APP/PizzaPlace/PizzaPlace.csproj'
+  PROJECT_PATH: 'DesktopApp/APP/PizzaPlace/PizzaPlace.csproj'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
   NUGET_SOURCE_URL: 'https://nuget.pkg.github.com/chitulescui/index.json'
 jobs:
