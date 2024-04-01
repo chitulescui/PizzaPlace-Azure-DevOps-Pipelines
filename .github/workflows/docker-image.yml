@@ -1,0 +1,23 @@
+name: Cluster add deployment + scaling up
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
+jobs:
+
+  build:
+
+    runs-on: ["self-hosted","Linux","X64"]
+
+    steps:
+    - name: Start minikube
+      run: minikube start
+    - name: Add the deployment
+      run: kubetcl apply -f webapp-deployment.yaml
+    - name: Scale-up
+      run: kubectl scale deployment webapp-deployment –replicas=4
