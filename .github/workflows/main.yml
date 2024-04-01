@@ -18,11 +18,14 @@ jobs:
       with:
           username: chitulescui
           password: ${{ secrets.SECRET_DOCKER }}
-    - name: Build and push
-      uses: docker/build-push-action@v5
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v5.3.0
       with:
-          push: true
           tags: webapp/webapp:latest
+      # uses: docker/build-push-action@v5
+      # with:
+      #     push: true
+      #     tags: webapp/webapp:latest
 
     
-    
+   
