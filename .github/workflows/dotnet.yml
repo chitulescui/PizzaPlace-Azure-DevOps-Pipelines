@@ -25,7 +25,7 @@ jobs:
       #     dotnet-version: 8.0.x
           
       - name: Restore
-        run: dotnet restore ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
+        run: dotnet restore /PizzaPlace-Azure-DevOps-Pipelines./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
       - name: Build
         run: dotnet build ./DesktopApp/APP/PizzaPlace/PizzaPlace.csproj
       - name: Pack
