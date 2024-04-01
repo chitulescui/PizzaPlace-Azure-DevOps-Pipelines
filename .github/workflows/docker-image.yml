@@ -17,6 +17,10 @@ jobs:
     steps:
     - name: Start minikube
       run: minikube start
+    - name: get pods
+      run: kubectl get pods
+    - name: get 
+      run: kubectl get deployment
     - name: Change directory
       run: cd ~/Desktop/kubernetes
     - name: Add the deployment
