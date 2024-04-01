@@ -25,6 +25,6 @@ jobs:
       working-directory: WebApp/
       run: docker build . --file Dockerfile --tag webapp:latest
     - name: Push
-      run: docker push webapp:latest
+      run: sudo docker push webapp:latest
     
    
