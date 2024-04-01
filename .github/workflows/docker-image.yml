@@ -17,6 +17,8 @@ jobs:
     steps:
     - name: Start minikube
       run: minikube start
+    - name: Change directory
+      run: cd ~/Desktop/kubernetes
     - name: Add the deployment
       run: kubectl apply -f webapp-deployment.yaml
     - name: Scale-up
