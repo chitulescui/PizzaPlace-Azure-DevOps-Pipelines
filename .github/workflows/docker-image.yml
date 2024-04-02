@@ -19,9 +19,13 @@ jobs:
       run: minikube start
     - name: get pods
       run: kubectl get pods
+    - name: ls
+      run: ls
+    - name: cd
+      run: cd Kubernetes
     - name: get 
       run: kubectl get deployment
     - name: Add the deployment
-      run: kubectl apply -f ./Kubernetes/webapp-deployment.yaml
+      run: kubectl apply -f webapp-deployment.yaml
     - name: Scale-up
       run: kubectl scale --replicas=3 -f webapp-deployment.yaml
