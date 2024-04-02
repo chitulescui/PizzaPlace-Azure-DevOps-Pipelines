@@ -26,6 +26,6 @@ jobs:
     - name: get 
       run: kubectl get deployment
     - name: Add the deployment
-      run: kubectl apply -f webapp-deployment.yaml
+      run: kubectl apply -f ./Kubernetes/webapp-deployment.yaml
     - name: Scale-up
       run: kubectl scale --replicas=3 -f webapp-deployment.yaml
