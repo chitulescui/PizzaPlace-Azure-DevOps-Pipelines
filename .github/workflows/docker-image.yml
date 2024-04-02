@@ -15,17 +15,17 @@ jobs:
     runs-on: ["self-hosted","Linux","X64"]
 
     steps:
-    - name: Start minikube
-      run: minikube start
+    # - name: Start minikube
+    #   run: minikube start
     - name: get pods
       run: kubectl get pods
-    - name: get 
-      run: kubectl get deployment
-    - name: Change directory
-      run: cd ~/Desktop/kubernetes
     - name: ls
       run: ls
-    # - name: Add the deployment
-    #   run: kubectl apply -f webapp-deployment.yaml
+    - name: cd
+      run: cd Kubernetes
+    - name: get 
+      run: kubectl get deployment
+    - name: Add the deployment
+      run: kubectl apply -f ./Kubernetes/webapp-deployment.yaml
     - name: Scale-up
-      run: kubectl scale --replicas=3 -f webapp-deployment.yaml
+      run: kubectl scale --replicas=3 -f ./Kubernetes/webapp-deployment.yaml
